@@ -1,0 +1,38 @@
+stages:
+  - build
+  - linter
+  - tests
+
+image: gitlab/dind
+
+services:
+  - docker:dind
+build:
+  stage: build
+  tags:
+    - docker
+  script:
+    - docker build -f Dockerfile -t gomigrator .
+    - mkdir image
+    - docker save gomigrator > image/gomigrator.tar
+  artifacts:
+    paths:
+      - image
+
+linter:
+  stage: linter
+  dependencies:
+    - build
+  tags:
+    - docker
+  script:
+    - docker load -i image/gomigrator.tar
+    - docker run gomigrator make lint
+
+tests:
+  stage: tests
+  dependencies:
+    - build
+  script:
+    - docker load -i image/gomigrator.tar
+    - docker run gomigrator make test

@@ -1,0 +1,18 @@
+version: "3"
+services:
+  tests:
+    build: .
+    command: ["go", "test"]
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres
+    restart: always
+    logging:
+      driver: "none"
+    environment:
+      POSTGRES_USER: tester
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
