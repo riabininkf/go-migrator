@@ -1,5 +1,6 @@
 # gomigrator
-https://github.com/OtusGolang/final_project/blob/master/04-sql-migrator.md
+Design work for golang developer certification
+Technical requirements - https://github.com/OtusGolang/final_project/blob/master/04-sql-migrator.md
 ## Installation
 ```bash
 go get github.com/riabininkf/go-migrator
